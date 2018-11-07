@@ -51,6 +51,7 @@ public class Login extends javax.swing.JFrame {
 
         btnInicioSesion.setBackground(new java.awt.Color(204, 204, 0));
         btnInicioSesion.setText("Iniciar Sesión");
+        btnInicioSesion.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnInicioSesion.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnInicioSesionActionPerformed(evt);
@@ -168,8 +169,8 @@ public class Login extends javax.swing.JFrame {
         // Validar el usuario
         if(usuario.equals("admin") && password.equals("12345")){
             // Iniciamos sesión
-            venta obj = new venta();
-            obj.setVisible(true);
+            VistaPrincipal objVistaPrincipal = new VistaPrincipal();
+            objVistaPrincipal.setVisible(true);
 
             this.setVisible(false);
 
