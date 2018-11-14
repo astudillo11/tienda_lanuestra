@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package Trabajo_Final;
+
 import javax.swing.table.DefaultTableModel;
 import javax.xml.bind.annotation.XmlElement;
 import Sentencias.*;
@@ -25,15 +26,16 @@ public class cliente extends javax.swing.JFrame {
         modeloTable = new DefaultTableModel(null, getColumn());
 
         initComponents();
-        
+
         this.setTitle("cliente");
         this.setLocation(400, 220);
     }
 
-     private String[] getColumn(){
-        String columnas[] = new String[]{"nit","nombre","apellido","telefono","direccion"};
+    private String[] getColumn() {
+        String columnas[] = new String[]{"nit", "nombre", "apellido", "telefono", "direccion"};
         return columnas;
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -96,6 +98,11 @@ public class cliente extends javax.swing.JFrame {
         txtnit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtnitActionPerformed(evt);
+            }
+        });
+        txtnit.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtnitKeyTyped(evt);
             }
         });
 
@@ -238,7 +245,7 @@ public class cliente extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        VistaPrincipal obj=new VistaPrincipal();
+        VistaPrincipal obj = new VistaPrincipal();
         obj.setVisible(true);
         dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
@@ -257,121 +264,112 @@ public class cliente extends javax.swing.JFrame {
 
     private void btnAdicionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdicionarActionPerformed
         //Validar los campos vac{ios
-        if(txtnit.getText().equals("")){
+        if (txtnit.getText().equals("")) {
             JOptionPane.showMessageDialog(null, "Ingrese nit");
             txtnit.requestFocus();
             return;
-        }   
-        
-        if(txtnombre.getText().equals("")){
+        }
+
+        if (txtnombre.getText().equals("")) {
             JOptionPane.showMessageDialog(null, "Ingrese nombre");
             txtnombre.requestFocus();
             return;
-        }   
-        if(txtapellido.getText().equals("")){
+        }
+        if (txtapellido.getText().equals("")) {
             JOptionPane.showMessageDialog(null, "Ingrese apellido");
             txtapellido.requestFocus();
             return;
         }
-        
-        if(txttelefono.getText().equals("")){
+
+        if (txttelefono.getText().equals("")) {
             JOptionPane.showMessageDialog(null, "Ingrese Telefono");
             txttelefono.requestFocus();
             return;
-        }   
-        
-        if(txtdireccion.getText().equals("")){
+        }
+
+        if (txtdireccion.getText().equals("")) {
             JOptionPane.showMessageDialog(null, "Ingrese Direccion");
             txtdireccion.requestFocus();
             return;
-            
-       
+
+
     }//GEN-LAST:event_btnAdicionarActionPerformed
-    //Instancio la clase 
+        //Instancio la clase 
         TablaCliente objTablaCliente = new TablaCliente();
-        
+
         //Declaro variables
         int nit;
         String nombre;
         String apellido;
         int telefono;
         String direccion;
-        String sqlConsulta;
-        
+
         //Asigno los valores del formualrio 
         nit = Integer.parseInt(txtnit.getText());
         nombre = txtnombre.getText();
         apellido = txtapellido.getText();
         telefono = Integer.parseInt(txttelefono.getText());
         direccion = txtdireccion.getText();
-        
-        
-        //Envio los datos
-        sqlConsulta = "select * from cliente where nit ="+ nit;
-        
-        boolean resultado = objTablaCliente.insertarCliente(nit,nombre,apellido,telefono,direccion);
-            if(resultado == true){
-                JOptionPane.showMessageDialog(null, "Registro exitoso");
-            }else{
-                JOptionPane.showMessageDialog(null, "Registro no exitoso");
 
-            }
-            
+        boolean resultado = objTablaCliente.insertarCliente(nit, nombre, apellido, telefono, direccion);
+        if (resultado == true) {
+            JOptionPane.showMessageDialog(null, "Registro exitoso");
+        } else {
+            JOptionPane.showMessageDialog(null, "Registro no exitoso");
+
+        }
+
         //Limpio los campos
         txtnit.setText("");
         txtnombre.setText("");
         txtapellido.setText("");
         txttelefono.setText("");
-         txtdireccion.setText("");
-        
-       
-    
-    
+        txtdireccion.setText("");
+
     }
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
         TablaCliente objTablaCliente = new TablaCliente();
-        
+
         //Asigno el modelo para el Jtable
         DefaultTableModel modeloTable = (DefaultTableModel) tblModel.getModel();
-        
+
         //Asigno el indice del elemento seleccionado
-        int indice= tblModel.getSelectedRow();
-        
+        int indice = tblModel.getSelectedRow();
+
         //Asigno el campo de codigo al elemento a eliminar
         int codigo = (int) modeloTable.getValueAt(indice, 0);
-        
+
         //Elimino el registro de la tabla
         modeloTable.removeRow(indice);
-        
+
         //Elimino el registro de la BD
         boolean resultado = objTablaCliente.eliminarCliente(codigo);
-        
-        if(resultado == true){
+
+        if (resultado == true) {
             JOptionPane.showMessageDialog(null, "Registro elimano correctamente");
-        }else{
+        } else {
             JOptionPane.showMessageDialog(null, "Registro elimano correctamente");
 
         }
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
-         modeloTable.setNumRows(0);
-       
+        modeloTable.setNumRows(0);
+
         TablaCliente objTablaCliente = new TablaCliente();
         ResultSet resultado = objTablaCliente.cargarCliente();
-         try {
-            Object data[] = new Object[4];
-            while (resultado.next()){
-                for(int i = 0; i < 4; i++){
-                    data[i] = resultado.getObject(i+1);
+        try {
+            Object data[] = new Object[5];
+            while (resultado.next()) {
+                for (int i = 0; i < 5; i++) {
+                    data[i] = resultado.getObject(i + 1);
                 }
-                modeloTable.addRow(data); 
+                modeloTable.addRow(data);
             }
-                                   
-                
+
         } catch (Exception e) {
-             JOptionPane.showMessageDialog(null, "Error" + e.getMessage());
-    }
+            JOptionPane.showMessageDialog(null, "Error" + e.getMessage());
+        }
     }//GEN-LAST:event_btnBuscarActionPerformed
 
     private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarActionPerformed
@@ -380,16 +378,25 @@ public class cliente extends javax.swing.JFrame {
         txtnombre.setText("");
         txtapellido.setText("");
         txttelefono.setText("");
-         txtdireccion.setText("");
-        
-        
+        txtdireccion.setText("");
+
         //Limpio las filas y columnas
         modeloTable.setNumRows(0);
     }//GEN-LAST:event_btnLimpiarActionPerformed
 
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
-       System.exit(0);
+        System.exit(0);
     }//GEN-LAST:event_btnSalirActionPerformed
+
+    private void txtnitKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtnitKeyTyped
+        char validar = evt.getKeyChar();
+
+        if (Character.isLetter(validar)) {
+            getToolkit().beep();
+            evt.consume();
+            JOptionPane.showMessageDialog(null, "solo numeros");
+        }
+    }//GEN-LAST:event_txtnitKeyTyped
 
     /**
      * @param args the command line arguments
@@ -418,7 +425,6 @@ public class cliente extends javax.swing.JFrame {
         }
         //</editor-fold>
 
-        
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new cliente().setVisible(true);

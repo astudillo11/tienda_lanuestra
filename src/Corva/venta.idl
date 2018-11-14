@@ -1,12 +1,12 @@
-module Proveedores {
-    interface Proveedor{
-        boolean insertarProveedor(in long codigoProveedor, in wstring nombre, in wstring telefono, in wstring direccion );
-        
-        boolean actualizarProveedor(in long codigoProveedor, in wstring nombre, in long telefono, in wstring direccion ); 
+module Ventas {
 
-        boolean eliminarProveedor(in long codProveedor);
+    interface Venta{
+
+        boolean insertarVenta(in long id_venta,in wstring cliente_id, in long producto_id, in long  precio, in long cantidad);
         
-        wstring consultarProveedor(in long codProveedor);
+        boolean actualizarVenta(in long id, in long  producto_id , in wstring cantidad, in long  precio ); 
+
+        boolean eliminarProveedor(in long id);
        
         oneway void shutdown();
         
