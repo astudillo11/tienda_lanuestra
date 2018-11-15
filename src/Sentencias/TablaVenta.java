@@ -8,24 +8,40 @@ import javax.swing.JOptionPane;
         
 public class TablaVenta extends VentaPOA {
     ConexionBD conexion = new ConexionBD();
-    
+
     @Override
-    public boolean insertarVenta(int id, int producto_id, String cantidad, int precio) {
+    public boolean insertarVenta(int id_venta, double subtotal, double iva, double total_pagar) {
+        boolean resultado = false;
+        try {
+            String sql = "insert into venta(id_venta,subtotal,iva,total_pagar) values ('"+id_venta+"','"+subtotal+"','"+iva+"','"+total_pagar+"')";
+            conexion.conectar();
+            Statement st = conexion.conex.createStatement();
+            int valor = st.executeUpdate(sql);
+            if(valor>0){
+                resultado = true;
+            }
+            //Se cierran las conexiones
+            conexion.conex.close();
+            st.close();
+            
+        } catch (Exception e) {
+           JOptionPane.showMessageDialog(null, "Error al insertar. "+e.getMessage());
+        }        
+        return resultado; 
+    }
+
+    @Override
+    public boolean actualizarVenta(int id_venta, double producto, double precio, double cantidad) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public boolean actualizarVenta(int id, int producto_id, String cantidad, int precio) {
+    public boolean eliminarVenta(int id) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public boolean eliminarProveedor(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public String consultarProveedor(int id) {
+    public String consultarVenta(int id) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
@@ -37,7 +53,7 @@ public class TablaVenta extends VentaPOA {
     public ResultSet consultarProductoCombo(){
         ResultSet resultado = null;
         try {
-            String sentenciaSql = "Select id, nombre, precio from productos";
+            String sentenciaSql = "select id, nombre, precio from productos";
             conexion.conectar();
             Statement st = conexion.conex.createStatement();
             resultado = st.executeQuery(sentenciaSql);
@@ -46,5 +62,4 @@ public class TablaVenta extends VentaPOA {
         }
             return resultado;
     }
-    
-}
+   }

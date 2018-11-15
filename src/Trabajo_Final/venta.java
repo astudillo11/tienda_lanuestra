@@ -1,5 +1,6 @@
 package Trabajo_Final;
 
+import Sentencias.TablaProveedor;
 import Sentencias.TablaVenta;
 import java.sql.ResultSet;
 import javax.swing.DefaultComboBoxModel;
@@ -7,6 +8,7 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 public class venta extends javax.swing.JFrame {
+    private DefaultTableModel modeloTable;
 
     //Declaro el DefaultTableModel
     //private DefaultTableModel modelTableVenta;
@@ -68,7 +70,6 @@ public class venta extends javax.swing.JFrame {
         lblSubtotal = new javax.swing.JLabel();
         lblPrecio = new javax.swing.JLabel();
         lblIva = new javax.swing.JLabel();
-        btnAdicionar = new javax.swing.JButton();
         lblTotal = new javax.swing.JLabel();
         btnEliminar = new javax.swing.JButton();
         lblSubtotal1 = new javax.swing.JLabel();
@@ -80,11 +81,11 @@ public class venta extends javax.swing.JFrame {
         jButton2 = new javax.swing.JButton();
         cboProducto = new javax.swing.JComboBox<>();
         txtSubtotal = new javax.swing.JTextField();
-        btnReporteVentas = new javax.swing.JButton();
         txtIva = new javax.swing.JTextField();
         txtTotal = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         txtIdVenta = new javax.swing.JTextField();
+        btnAdicionar = new javax.swing.JButton();
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -156,14 +157,6 @@ public class venta extends javax.swing.JFrame {
         lblIva.setText("IVA:");
         getContentPane().add(lblIva, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 440, -1, -1));
 
-        btnAdicionar.setText("ADICIONAR");
-        btnAdicionar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAdicionarActionPerformed(evt);
-            }
-        });
-        getContentPane().add(btnAdicionar, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 120, -1, -1));
-
         lblTotal.setText("TOTAL A PAGAR:");
         getContentPane().add(lblTotal, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 440, -1, -1));
 
@@ -182,7 +175,7 @@ public class venta extends javax.swing.JFrame {
                 btnTotalizarActionPerformed(evt);
             }
         });
-        getContentPane().add(btnTotalizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 170, -1, -1));
+        getContentPane().add(btnTotalizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 160, -1, -1));
         getContentPane().add(lblTotal1, new org.netbeans.lib.awtextra.AbsoluteConstraints(567, 377, 72, 16));
         getContentPane().add(lblIva1, new org.netbeans.lib.awtextra.AbsoluteConstraints(217, 383, 77, 16));
 
@@ -222,9 +215,6 @@ public class venta extends javax.swing.JFrame {
         });
         getContentPane().add(cboProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 110, 163, -1));
         getContentPane().add(txtSubtotal, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 440, 100, -1));
-
-        btnReporteVentas.setText("REPORTE VENTAS");
-        getContentPane().add(btnReporteVentas, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 500, -1, -1));
         getContentPane().add(txtIva, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 440, 120, -1));
         getContentPane().add(txtTotal, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 440, 120, -1));
 
@@ -232,68 +222,25 @@ public class venta extends javax.swing.JFrame {
         getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 40, -1, -1));
         getContentPane().add(txtIdVenta, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 40, 160, -1));
 
+        btnAdicionar.setText("ADICIONAR");
+        btnAdicionar.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                btnAdicionarItemStateChanged(evt);
+            }
+        });
+        btnAdicionar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAdicionarActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnAdicionar, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 110, -1, -1));
+
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
         System.exit(0);
     }//GEN-LAST:event_btnSalirActionPerformed
-
-    private void btnAdicionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdicionarActionPerformed
-        //Validar los campos vacios              
-        if (txtPrecio.getText().equals("")) {
-            JOptionPane.showMessageDialog(null, "Digite el precio");
-            txtPrecio.requestFocus();
-            return;
-        }
-
-        if (txtCantidad.getText().equals("")) {
-            JOptionPane.showMessageDialog(null, "Digite la cantidad");
-            txtCantidad.requestFocus();
-            return;
-        }
-
-        //Cargar la tabla
-        DefaultTableModel modelo = (DefaultTableModel) tblTabla.getModel();
-
-        if (control == 0) {
-            modelo.addColumn("PRODUCTO");
-            modelo.addColumn("CANTIDAD");
-            modelo.addColumn("PRECIO");
-
-            control = control + 1;
-        }
-
-        //Creamos un objeto
-        productoCombo objProductoCombo = (productoCombo) cboProducto.getSelectedItem();
-        //Asignamos el atributo del objeto seleccionado en el combo.
-        String estadoProductoCombo = objProductoCombo.getNombre(); //Ya aquí tenemos el id del estado seleccionado.
-
-        String vector[] = new String[3];
-        vector[0] = estadoProductoCombo;
-        vector[1] = txtCantidad.getText();
-        vector[2] = txtPrecio.getText();
-     
-        //Añado los valores de los elementos graficos a las variables
-        int valorPrecio = Integer.parseInt(txtPrecio.getText());
-        int cantidad = Integer.parseInt(txtCantidad.getText());
-    
-        subtotal = valorPrecio * cantidad;
-        acum = acum  + subtotal;
-        iva = acum * 0.19;
-        total = iva + acum;
-        
-        txtSubtotal.setText(Integer.toString((int) acum));
-        txtIva.setText(Integer.toString((int) iva));
-        txtTotal.setText(Integer.toString((int) total));
-        
-        modelo.addRow(vector);
-        
-        //Limpio los campos
-        txtPrecio.setText("");
-        txtCantidad.setText("");
-
-    }//GEN-LAST:event_btnAdicionarActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
          // Eliminar el registro de la tabla
@@ -326,34 +273,23 @@ public class venta extends javax.swing.JFrame {
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void btnTotalizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTotalizarActionPerformed
-
+        TablaVenta objTablaVenta = new TablaVenta();
         //Modelo tabla
-        DefaultTableModel modelo = (DefaultTableModel) tblTabla.getModel();
-        int cadaFilaTabla = modelo.getRowCount();
+        
+        int id;
+        
+        id = Integer.parseInt(txtIdVenta.getText());
+        
+       // DefaultTableModel modelo = (DefaultTableModel) tblTabla.getModel();
+        boolean resultado = objTablaVenta.insertarVenta(id,subtotal,iva,total);
+        if (resultado == true) {
+            JOptionPane.showMessageDialog(null, "Registro exitoso");
+        } else {
+            JOptionPane.showMessageDialog(null, "Registro no exitoso");
 
-        //Declaro variables
-        double iva;
-        double subtotal;
-        double totalPagar;
-        int cantidadProducto;
-        int precioProducto;
-        subtotal = 0;
-        iva = 19;
-
-        for (int fila = 0; fila < cadaFilaTabla; fila++) {
-
-            cantidadProducto = Integer.parseInt((String) modelo.getValueAt(fila, 1));
-            precioProducto = Integer.parseInt((String) modelo.getValueAt(fila, 2));
-            subtotal = subtotal + (cantidadProducto * precioProducto);
         }
-
-        iva = subtotal * iva / 100;
-        totalPagar = subtotal + iva;
-
-        lblSubtotal1.setText(String.valueOf(subtotal));
-        lblIva1.setText(String.valueOf(iva));
-        lblTotal1.setText(String.valueOf(totalPagar));
-
+        
+        
     }//GEN-LAST:event_btnTotalizarActionPerformed
 
     private void txtCantidadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCantidadActionPerformed
@@ -370,18 +306,11 @@ public class venta extends javax.swing.JFrame {
 
     private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarActionPerformed
 
-        for (int fila = 0; fila < tblTabla.getRowCount(); fila++) {
-
-            DefaultTableModel modelo = (DefaultTableModel) tblTabla.getModel();
-            modelo.removeRow(fila);
-            fila -= 1;
-
-        }
         //Limpiar los campos
-        //txtProducto.setText("");
+        txtIdVenta.setText("");
         txtCantidad.setText("");
         txtPrecio.setText("");
-        //txtProducto.requestFocus();
+        txtIdVenta.requestFocus();
     }//GEN-LAST:event_btnLimpiarActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -414,14 +343,101 @@ public class venta extends javax.swing.JFrame {
         //Asigno los elementos de la tabla a los respectivos campos
         String capCantidad = (String)modelo.getValueAt(tblTabla.getSelectedRow(), 1);
         String capPrecio = (String)modelo.getValueAt(tblTabla.getSelectedRow(), 2);
-        
+        int estadoPrecio;
         //Convierto las vatiables de Int a String 
-        cantidadCap = Integer.parseInt(capCantidad);
+       cantidadCap = Integer.parseInt(capCantidad);
        precioCap = Integer.parseInt(capPrecio);
        
         System.out.println(cantidadCap);
        System.out.println(precioCap);        
     }//GEN-LAST:event_tblTablaMouseClicked
+
+    private void btnAdicionarItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_btnAdicionarItemStateChanged
+        
+    }//GEN-LAST:event_btnAdicionarItemStateChanged
+
+    private void btnAdicionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdicionarActionPerformed
+       
+        if(txtPrecio.getText().equals("")){
+            JOptionPane.showMessageDialog(null, "Digite el precio");
+            txtPrecio.requestFocus();
+            return;
+        }
+        
+        if(txtCantidad.getText().equals("")){
+            JOptionPane.showMessageDialog(null, "Digite la cantidad");
+            txtCantidad.requestFocus();
+            return;
+        }
+        
+        //Cargar la tabla
+        DefaultTableModel modelo = (DefaultTableModel) tblTabla.getModel();
+        
+        
+        int control = 0;
+
+        if(control == 0){
+            modelo.addColumn("ID");
+            modelo.addColumn("PRODUCTO");
+            modelo.addColumn("CANTIDAD");
+            modelo.addColumn("PRECIO");
+            control = control + 1;
+        }
+        
+        //Creamos un objeto
+        productoCombo objProductoCombo = (productoCombo) cboProducto.getSelectedItem();
+        //Asignamos el atributo del objeto seleccionado en el combo.
+        String estadoProductoCombo = objProductoCombo.getNombre(); //Ya aquí tenemos el id del estado seleccionado.
+        int estadoPrecio = objProductoCombo.getPrecio();
+        
+        txtPrecio.setText(Integer.toString(estadoPrecio));  
+        
+        //Declaro variables
+        int id = 0;
+    
+        String vector[] = new String[4];
+        vector[0] = txtIdVenta.getText();
+        vector[1] = estadoProductoCombo;
+        vector[2] = txtCantidad.getText();
+        vector[3] = txtPrecio.getText();
+ 
+        modelo.addRow(vector);
+        
+        //Procesos
+        double cantidad = 0;
+        double precio = 0;
+        
+        
+        cantidad = Integer.parseInt(txtCantidad.getText());
+        precio = Integer.parseInt(txtPrecio.getText());
+        
+        subtotal = (int) (cantidad * precio);
+        acum = acum + subtotal;
+        iva = (acum * 0.19) + iva;
+        total = acum + iva; 
+        
+        txtIva.setText(String.valueOf(iva));
+        txtTotal.setText(String.valueOf(total));
+        txtSubtotal.setText(String.valueOf(acum));
+        /*
+        private int control = 0;
+        private double total = 0;
+        private int subtotal = 0;
+        private double iva = 0;
+        private double acum = 0;
+        private int cantidadCap = 0;
+        private int precioCap = 0;
+        private int subtotalCap = 0;
+        private double ivaRestar = 0;
+        */
+        
+        /*
+        txtIdVenta.setText("");
+        txtCantidad.setText("");
+        txtPrecio.setText("");
+        txtPrecio.setText(Integer.toString(estadoPrecio)); 
+        */
+    }//GEN-LAST:event_btnAdicionarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -463,7 +479,6 @@ public class venta extends javax.swing.JFrame {
     private javax.swing.JButton btnAdicionar;
     private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnLimpiar;
-    private javax.swing.JButton btnReporteVentas;
     private javax.swing.JButton btnSalir;
     private javax.swing.JButton btnTotalizar;
     private javax.swing.JComboBox<String> cboProducto;

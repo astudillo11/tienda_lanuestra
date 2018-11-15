@@ -2,11 +2,14 @@ module Ventas {
 
     interface Venta{
 
-        boolean insertarVenta(in long id_venta,in wstring cliente_id, in long producto_id, in long  precio, in long cantidad);
+        boolean insertarVenta(in long id_venta,in double subtotal, in double iva, in double total_pagar);
         
-        boolean actualizarVenta(in long id, in long  producto_id , in wstring cantidad, in long  precio ); 
+        boolean actualizarVenta(in long id_venta,in double subtotal, in double iva, in double total_pagar);
 
-        boolean eliminarProveedor(in long id);
+        boolean eliminarVenta(in long id_venta);
+
+        wstring consultarVenta(in long id_venta);
+
        
         oneway void shutdown();
         
