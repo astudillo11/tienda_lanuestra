@@ -16,7 +16,7 @@ import javax.swing.JOptionPane;
 
 /**
  *
- * @author FRESKMANN SILVA
+ * @author Felipe
  */
 public class cliente extends javax.swing.JFrame {
 

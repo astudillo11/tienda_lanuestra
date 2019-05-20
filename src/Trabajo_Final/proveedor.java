@@ -17,7 +17,7 @@ import javax.swing.JOptionPane;
 
 /**
  *
- * @author FRESKMANN SILVA
+ * @author Felipe
  */
 public class proveedor extends javax.swing.JFrame {
 

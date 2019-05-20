@@ -7,7 +7,7 @@ package Trabajo_Final;
 
 /**
  *
- * @author FRESKMANN SILVA
+ * @author felipe
  */
 public class VistaPrincipal extends javax.swing.JFrame {
 

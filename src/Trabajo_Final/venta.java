@@ -71,13 +71,11 @@ public class venta extends javax.swing.JFrame {
         lblPrecio = new javax.swing.JLabel();
         lblIva = new javax.swing.JLabel();
         lblTotal = new javax.swing.JLabel();
-        btnEliminar = new javax.swing.JButton();
         lblSubtotal1 = new javax.swing.JLabel();
         btnTotalizar = new javax.swing.JButton();
         lblTotal1 = new javax.swing.JLabel();
         lblIva1 = new javax.swing.JLabel();
         txtCantidad = new javax.swing.JTextField();
-        btnLimpiar = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         cboProducto = new javax.swing.JComboBox<>();
         txtSubtotal = new javax.swing.JTextField();
@@ -159,23 +157,15 @@ public class venta extends javax.swing.JFrame {
 
         lblTotal.setText("TOTAL A PAGAR:");
         getContentPane().add(lblTotal, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 440, -1, -1));
-
-        btnEliminar.setText("ELIMINAR");
-        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnEliminarActionPerformed(evt);
-            }
-        });
-        getContentPane().add(btnEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 170, -1, -1));
         getContentPane().add(lblSubtotal1, new org.netbeans.lib.awtextra.AbsoluteConstraints(99, 383, 72, 16));
 
-        btnTotalizar.setText("TOTALIZAR");
+        btnTotalizar.setText("GUARDAR");
         btnTotalizar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnTotalizarActionPerformed(evt);
             }
         });
-        getContentPane().add(btnTotalizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 160, -1, -1));
+        getContentPane().add(btnTotalizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 160, 100, 30));
         getContentPane().add(lblTotal1, new org.netbeans.lib.awtextra.AbsoluteConstraints(567, 377, 72, 16));
         getContentPane().add(lblIva1, new org.netbeans.lib.awtextra.AbsoluteConstraints(217, 383, 77, 16));
 
@@ -190,14 +180,6 @@ public class venta extends javax.swing.JFrame {
             }
         });
         getContentPane().add(txtCantidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 210, 163, -1));
-
-        btnLimpiar.setText("NUEVA VENTA");
-        btnLimpiar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnLimpiarActionPerformed(evt);
-            }
-        });
-        getContentPane().add(btnLimpiar, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 120, -1, -1));
 
         jButton2.setText("VISTA PRINCIPAL");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -242,36 +224,6 @@ public class venta extends javax.swing.JFrame {
         System.exit(0);
     }//GEN-LAST:event_btnSalirActionPerformed
 
-    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
-         // Eliminar el registro de la tabla
-        DefaultTableModel modelo = (DefaultTableModel) tblTabla.getModel();
-        
-        double xd = 0;
-        
-        subtotalCap = precioCap * cantidadCap;
-        ivaRestar = (subtotalCap * 0.19);
-        xd = subtotalCap + ivaRestar;
-        
-        acum = acum - subtotalCap;
-        iva = iva - ivaRestar;
-        total = total - xd; 
-        
-        txtSubtotal.setText(Integer.toString((int) acum));
-        txtIva.setText(Integer.toString((int) iva));
-        txtTotal.setText(Integer.toString((int) total));
-        
-        
-        //System.out.println(subtotalCap);
-        //System.out.println(ivaRestar);
-        
-        //Identificar el elemento a eliminar
-        int indice = tblTabla.getSelectedRow();
-
-        modelo.removeRow(indice);
-        
-        
-    }//GEN-LAST:event_btnEliminarActionPerformed
-
     private void btnTotalizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTotalizarActionPerformed
         TablaVenta objTablaVenta = new TablaVenta();
         //Modelo tabla
@@ -303,15 +255,6 @@ public class venta extends javax.swing.JFrame {
             evt.consume();
         }
     }//GEN-LAST:event_txtCantidadKeyTyped
-
-    private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarActionPerformed
-
-        //Limpiar los campos
-        txtIdVenta.setText("");
-        txtCantidad.setText("");
-        txtPrecio.setText("");
-        txtIdVenta.requestFocus();
-    }//GEN-LAST:event_btnLimpiarActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         VistaPrincipal obj = new VistaPrincipal();
@@ -477,8 +420,6 @@ public class venta extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAdicionar;
-    private javax.swing.JButton btnEliminar;
-    private javax.swing.JButton btnLimpiar;
     private javax.swing.JButton btnSalir;
     private javax.swing.JButton btnTotalizar;
     private javax.swing.JComboBox<String> cboProducto;

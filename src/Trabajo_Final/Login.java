@@ -9,7 +9,7 @@ import javax.swing.JOptionPane;
 
 /**
  *
- * @author FRESKMANN SILVA
+ * @author Felipe
  */
 public class Login extends javax.swing.JFrame {
 
@@ -167,7 +167,7 @@ public class Login extends javax.swing.JFrame {
 
         // Proceso
         // Validar el usuario
-        if(usuario.equals("freskda") && password.equals("12345")){
+        if(usuario.equals("admin") && password.equals("123")){
             // Iniciamos sesión
             VistaPrincipal objVistaPrincipal = new VistaPrincipal();
             objVistaPrincipal.setVisible(true);

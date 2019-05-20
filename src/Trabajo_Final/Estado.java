@@ -7,7 +7,7 @@ package Trabajo_Final;
 
 /**
  *
- * @author FRESKMANN SILVA
+ * @author Felipe
  */
 public class Estado {
      private int Cod_proveedor;

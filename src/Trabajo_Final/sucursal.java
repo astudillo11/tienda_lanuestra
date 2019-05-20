@@ -12,7 +12,7 @@ import javax.swing.table.DefaultTableModel;
 
 /**
  *
- * @author FRESKMANN SILVA
+ * @author Felipe
  */
 public class sucursal extends javax.swing.JFrame {
 

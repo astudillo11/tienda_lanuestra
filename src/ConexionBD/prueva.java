@@ -7,7 +7,7 @@ package ConexionBD;
 
 /**
  *
- * @author FRESKMANN SILVA
+ * @author Felipe
  */
 public class prueva {
     public static void main(String[] args) {

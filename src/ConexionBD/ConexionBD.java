@@ -10,7 +10,7 @@ import java.sql.DriverManager;
 
 /**
  *
- * @author FRESKMANN SILVA
+ * @author felipe
  */
 public class ConexionBD {
        public Connection conex;

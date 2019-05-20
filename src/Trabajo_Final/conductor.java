@@ -12,7 +12,7 @@ import javax.swing.table.DefaultTableModel;
 
 /**
  *
- * @author FRESKMANN SILVA
+ * @author felipe
  */
 public class conductor extends javax.swing.JFrame {
     private DefaultTableModel modeloTable;
